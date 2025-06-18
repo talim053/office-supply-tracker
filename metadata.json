@@ -1,0 +1,7 @@
+
+{
+  "name": "Office Supply Tracker",
+  "description": "A simple web application to track daily office supplies of tea, samosa, and namkeen provided by the office helper. Records are stored locally in the browser.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
