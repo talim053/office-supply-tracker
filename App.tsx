@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import Header from './components/Header';
+// ✅ Corrected the path here
+import Header from './Header'; 
 import SupplyForm from './components/SupplyForm';
 import SupplyTable from './components/SupplyTable';
 import { DailySupply } from './types';
