@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-// ✅ Corrected the path here
-import Header from './Header'; 
+import Header from './Header'; // ✅ Fixed path (no components folder)
 import SupplyForm from './components/SupplyForm';
 import SupplyTable from './components/SupplyTable';
 import { DailySupply } from './types';
@@ -38,7 +37,7 @@ const App: React.FC = () => {
   const handleSetEditingSupply = useCallback((supply: DailySupply) => {
     setEditingSupply(supply);
     if (formRef.current) {
-        formRef.current.scrollIntoView({ behavior: 'smooth' });
+      formRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, []);
 
@@ -47,27 +46,36 @@ const App: React.FC = () => {
   }, []);
 
   const handleAddSupply = useCallback((newSupplyData: Omit<DailySupply, 'id'>) => {
-    setEditingSupply(null); // Clear any editing state
+    setEditingSupply(null);
     const newSupply: DailySupply = {
       ...newSupplyData,
       id: Date.now().toString(),
     };
-    setSupplies(prevSupplies => 
-      [newSupply, ...prevSupplies].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime() || parseInt(b.id) - parseInt(a.id))
+    setSupplies(prevSupplies =>
+      [newSupply, ...prevSupplies].sort(
+        (a, b) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime() ||
+          parseInt(b.id) - parseInt(a.id)
+      )
     );
   }, []);
 
   const handleUpdateSupply = useCallback((updatedSupply: DailySupply) => {
     setSupplies(prevSupplies =>
-      prevSupplies.map(supply => (supply.id === updatedSupply.id ? updatedSupply : supply))
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime() || parseInt(b.id) - parseInt(a.id))
+      prevSupplies
+        .map(supply => (supply.id === updatedSupply.id ? updatedSupply : supply))
+        .sort(
+          (a, b) =>
+            new Date(b.date).getTime() - new Date(a.date).getTime() ||
+            parseInt(b.id) - parseInt(a.id)
+        )
     );
     setEditingSupply(null);
   }, []);
 
   const handleDeleteSupply = useCallback((idToDelete: string) => {
     if (editingSupply && editingSupply.id === idToDelete) {
-        setEditingSupply(null); // Clear editing state if the edited item is deleted
+      setEditingSupply(null);
     }
     setSupplies(prevSupplies => prevSupplies.filter(supply => supply.id !== idToDelete));
   }, [editingSupply]);
@@ -92,10 +100,10 @@ const App: React.FC = () => {
             onCancelEdit={handleCancelEdit}
           />
         </div>
-        <SupplyTable 
-            supplies={supplies} 
-            onDeleteSupply={handleDeleteSupply}
-            onEditSupply={handleSetEditingSupply} 
+        <SupplyTable
+          supplies={supplies}
+          onDeleteSupply={handleDeleteSupply}
+          onEditSupply={handleSetEditingSupply}
         />
       </main>
       <footer className="text-center py-8 mt-12 text-sm text-gray-500">
